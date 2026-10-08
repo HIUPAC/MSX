@@ -1,0 +1,9 @@
+{
+  "name": "createReservation",
+  "version": "1.0.0",
+  "description": "原子化创建预约(防止同一座位被多人同时预约)",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

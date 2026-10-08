@@ -1,0 +1,29 @@
+<view class="quote-pop">
+  <!-- 首次引导提示 -->
+  <view wx:if="{{hintVisible}}" class="quote-hint">
+    <text class="quote-hint-text">点一下，送你一句话</text>
+    <view class="quote-hint-tail"></view>
+  </view>
+
+  <!-- 弹出气泡:一句孤立的话 -->
+  <view
+    class="quote-bubble {{bubbleVisible ? 'quote-bubble--show' : ''}} {{popAnim ? 'quote-bubble--pop' : ''}}"
+    catchtap="onDismiss"
+  >
+    <text class="quote-mark">“</text>
+    <text class="quote-text">{{quoteText}}</text>
+    <view class="quote-bubble-tail"></view>
+  </view>
+
+  <!-- 浮动触发器 -->
+  <view
+    class="quote-trigger {{pressed ? 'quote-trigger--pressed' : ''}}"
+    hover-class="quote-trigger--hover"
+    hover-stay-time="60"
+    bindtap="onTap"
+    aria-role="button"
+    aria-label="点击弹出一句话"
+  >
+    <text class="quote-glyph">”</text>
+  </view>
+</view>

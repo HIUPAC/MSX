@@ -1,0 +1,4 @@
+{
+  "component": true,
+  "usingComponents": { "t-icon": "/components/t-icon/t-icon" }
+}

@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "t-icon": "/components/t-icon/t-icon",
+    "quote-pop": "/components/quote-pop/quote-pop"
+  },
+  "navigationBarTitleText": "首页",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#F6F7F3",
+  "backgroundTextStyle": "dark"
+}

@@ -1,0 +1,56 @@
+.profile-page { padding: 32rpx 24rpx calc(32rpx + env(safe-area-inset-bottom)); }
+.profile-heading { display: flex; align-items: baseline; justify-content: space-between; padding: 0 8rpx 24rpx; }
+.profile-title { font-size: 38rpx; color: var(--text-primary); font-weight: 600; }
+.profile-subtitle { color: var(--text-secondary); font-size: 24rpx; }
+.account-card, .activity-card, .profile-menu, .secondary-menu { background: var(--bg-card); border-radius: 24rpx; margin-bottom: 20rpx; }
+.account-card { padding: 32rpx; }
+.account-header { display: flex; align-items: center; gap: 24rpx; }
+.account-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; }
+.account-name { color: var(--text-primary); font-size: 34rpx; line-height: 1.5; font-weight: 600; }
+.account-meta { color: var(--text-secondary); font-size: 24rpx; margin-top: 6rpx; }
+.guest-avatar { display: flex; align-items: center; justify-content: center; width: 96rpx; height: 96rpx; border-radius: 50%; background: var(--color-primary-light); flex-shrink: 0; }
+.avatar-pick-btn { display: flex; align-items: center; justify-content: center; padding: 0; margin: 0; width: 96rpx; height: 96rpx; background: var(--bg-page); border-radius: 50%; overflow: hidden; position: relative; flex-shrink: 0; }
+.avatar-pick-btn::after, .college-edit::after, .menu-row::after, .secondary-row::after, .logout-button::after { border: 0; }
+.user-avatar-img { width: 96rpx; height: 96rpx; border-radius: 50%; }
+.avatar-uploading-mask { position: absolute; inset: 0; background: rgba(38, 51, 44, 0.35); display: flex; align-items: center; justify-content: center; }
+.college-edit { display: flex; align-items: center; gap: 12rpx; margin: 26rpx 0 0; padding: 22rpx 0 0; border-top: 1rpx solid var(--border-color); border-radius: 0; background: transparent; line-height: 1.5; font-size: 24rpx; text-align: left; }
+.college-label { color: var(--text-secondary); margin-right: 16rpx; }
+.college-name { color: var(--text-primary); flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.login-entry { margin-top: 28rpx; }
+.activity-card { padding: 28rpx 32rpx 0; }
+.credit-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; }
+.credit-copy { display: flex; flex-direction: column; }
+.block-title { font-size: 28rpx; color: var(--text-primary); font-weight: 600; }
+.credit-note { margin-top: 4rpx; font-size: 22rpx; color: var(--text-secondary); }
+.credit-number { color: var(--color-primary); font-size: 40rpx; font-weight: 600; }
+.credit-limit { font-size: 22rpx; font-weight: 400; color: var(--text-secondary); }
+.credit-rule { display: block; color: var(--text-secondary); font-size: 21rpx; margin-top: 16rpx; padding-bottom: 24rpx; }
+.credit-warning { color: var(--color-warning); }
+.credit-ban { color: var(--color-warning); font-size: 24rpx; margin-top: 14rpx; }
+.profile-stats { display: flex; border-top: 1rpx solid var(--border-color); padding: 24rpx 0; }
+.profile-stat { display: flex; flex: 1; flex-direction: column; text-align: left; }
+.profile-stat + .profile-stat { border-left: 1rpx solid var(--border-color); padding-left: 24rpx; }
+.stat-number { color: var(--text-primary); font-size: 34rpx; font-weight: 500; }
+.stat-number.credit-warning { color: var(--color-warning); }
+.stat-label { font-size: 22rpx; color: var(--text-secondary); margin-top: 4rpx; }
+.profile-menu { padding: 0 24rpx; }
+.menu-row { display: flex; align-items: center; gap: 20rpx; margin: 0; padding: 26rpx 4rpx; background: transparent; border-radius: 0; line-height: 1.5; text-align: left; }
+.menu-row + .menu-row { border-top: 1rpx solid var(--border-color); }
+.menu-icon { width: 48rpx; display: flex; justify-content: center; }
+.menu-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; }
+.menu-title { font-size: 28rpx; color: var(--text-primary); }
+.menu-note { font-size: 22rpx; color: var(--text-secondary); margin-top: 4rpx; }
+.secondary-menu { padding: 0 28rpx; }
+.secondary-row { display: flex; justify-content: space-between; align-items: center; margin: 0; padding: 26rpx 4rpx; line-height: 1.5; color: var(--text-secondary); font-size: 26rpx; text-align: left; border-radius: 0; background: transparent; }
+.secondary-row + .secondary-row { border-top: 1rpx solid var(--border-color); }
+.logout-button { padding: 24rpx; margin: 8rpx 0 0; font-size: 24rpx; color: var(--text-secondary); line-height: 1.5; background: transparent; border-radius: 16rpx; }
+.row-active { background: var(--bg-hover); }
+.college-overlay { position: fixed; inset: 0; background: var(--bg-mask); z-index: 1000; display: flex; align-items: flex-end; }
+.college-popup { width: 100%; background: var(--bg-card); border-radius: 28rpx 28rpx 0 0; padding: 32rpx; padding-bottom: calc(32rpx + env(safe-area-inset-bottom)); max-height: 85vh; overflow-y: auto; }
+.college-picker-item { background: var(--bg-page); border-radius: 16rpx; padding: 24rpx; border: 1rpx solid var(--border-color); }
+.login-input { width: 100%; box-sizing: border-box; background: var(--bg-page); border-radius: 16rpx; padding: 24rpx; border: 1rpx solid var(--border-color); font-size: 28rpx; color: var(--text-primary); min-height: 84rpx; line-height: 1.5; }
+.login-input:focus { border-color: var(--color-primary); background: var(--bg-card); }
+.mode-tab { flex: 1; text-align: center; padding: 16rpx 0; font-size: 28rpx; color: var(--text-secondary); background: var(--bg-page); border: 1rpx solid var(--border-color); }
+.mode-tab:first-child { border-radius: 16rpx 0 0 16rpx; }
+.mode-tab:last-child { border-radius: 0 16rpx 16rpx 0; border-left: none; }
+.mode-active { color: #FFFFFF; background: var(--color-primary); border-color: var(--color-primary); font-weight: 600; }

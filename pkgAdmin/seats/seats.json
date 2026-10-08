@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "t-button": "/components/t-button/t-button",
+    "t-switch": "/components/t-switch/t-switch",
+    "t-tag": "/components/t-tag/t-tag",
+    "navbar-back": "/components/navbar-back/navbar-back"
+  },
+  "navigationBarTitleText": "座位管理"
+}

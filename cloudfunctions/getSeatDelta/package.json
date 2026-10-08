@@ -1,0 +1,9 @@
+{
+  "name": "getSeatDelta",
+  "version": "1.0.0",
+  "description": "增量拉取座位状态变化",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

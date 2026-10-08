@@ -1,0 +1,106 @@
+/* pkgAdmin/admin/admin.wxss */
+/* 顶部 Header */
+.admin-header {
+  margin: var(--space-sm);
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--text-white);
+  border-radius: 24rpx;
+  border: none;
+}
+.admin-header .text-lg,
+.admin-header .text-sm {
+  color: var(--text-white) !important;
+}
+.admin-header .text-secondary {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.content-padding {
+  padding: var(--space-sm);
+}
+
+/* 违规过滤栏 - 胶囊样式 */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: var(--space-sm);
+  padding: 4rpx;
+}
+.filter-tag {
+  display: inline-block;
+  padding: 8rpx 24rpx;
+  border-radius: 9999rpx;
+  background: var(--color-bg-secondary, #f5f5f5);
+  color: var(--text-regular);
+  font-size: var(--font-sm);
+  transition: all var(--transition-fast);
+  border: 2rpx solid transparent;
+}
+.filter-tag.active {
+  background: var(--color-primary);
+  color: var(--text-white);
+  border-color: var(--color-primary-dark);
+  font-weight: 500;
+  box-shadow: 0 2rpx 8rpx rgba(0, 82, 217, 0.3);
+}
+
+/* 申诉理由区 */
+.appeal-reason {
+  background: var(--color-bg-secondary, #f8f8f8);
+  padding: 16rpx 20rpx;
+  border-radius: 16rpx;
+  margin-top: 12rpx;
+  line-height: 1.7;
+  border-left: 6rpx solid var(--color-primary);
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 120rpx 32rpx;
+  color: var(--color-text-secondary, #999);
+  font-size: var(--font-sm);
+}
+
+/* 卡片悬浮效果 */
+.card {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* ============ 圆角按钮全局覆盖 ============ */
+/* TDesign 按钮圆角化（胶囊/圆润风格） */
+.t-button,
+.t-button--theme-primary,
+.t-button--theme-default,
+.t-button--theme-danger,
+.t-button--theme-success,
+.t-button--theme-warning,
+[class*="t-button--size"] {
+  border-radius: 9999rpx !important;
+}
+
+/* 大号按钮加粗 */
+.t-button.t-size-l,
+.t-button--size-large {
+  font-weight: 500 !important;
+  letter-spacing: 1rpx;
+}
+
+/* 通用工具类 */
+.mt-sm { margin-top: 12rpx; }
+.mt-md { margin-top: 24rpx; }
+.ml-sm { margin-left: 12rpx; }
+
+/* 申诉/通过按钮组间距 */
+.appeal-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12rpx;
+  margin-top: 12rpx;
+}
+.appeal-actions .t-button {
+  flex: 1;
+}

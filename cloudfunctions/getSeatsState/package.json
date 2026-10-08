@@ -1,0 +1,9 @@
+{
+  "name": "getSeatsState",
+  "version": "1.0.0",
+  "description": "获取全平台共享的座位状态(管理员权限,绕过集合权限限制)",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

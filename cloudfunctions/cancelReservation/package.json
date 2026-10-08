@@ -1,0 +1,9 @@
+{
+  "name": "cancelReservation",
+  "version": "1.0.0",
+  "description": "服务端取消预约:校验归属、更新状态、释放座位锁",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

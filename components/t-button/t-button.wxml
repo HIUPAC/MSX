@@ -1,0 +1,11 @@
+<button
+  class="t-button t-button--{{theme}} t-button--size-{{size}} {{block ? 'is-block' : ''}} {{disabled ? 'is-disabled' : ''}} {{loading ? 'is-loading' : ''}} t-button--variant-{{variant}}"
+  hover-class="t-button--hover"
+  hover-stay-time="80"
+  bindtap="onTap"
+  disabled="{{disabled || loading}}"
+>
+  <t-icon wx:if="{{loading}}" name="loading" size="28rpx" />
+  <t-icon wx:elif="{{icon}}" name="{{icon}}" size="28rpx" />
+  <slot></slot>
+</button>

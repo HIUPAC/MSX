@@ -1,0 +1,6 @@
+<!-- components/navbar-back/navbar-back.wxml -->
+<view class="navbar-back-wrap" wx:if="{{showBack}}" bindtap="onBack">
+  <view class="navbar-back-icon">
+    <text class="navbar-back-arrow">‹</text>
+  </view>
+</view>

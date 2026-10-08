@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "openapi": []
+  },
+  "triggers": [
+    {
+      "name": "auto_checkout_timer",
+      "type": "timer",
+      "config": "0 */5 * * * * *"
+    }
+  ]
+}

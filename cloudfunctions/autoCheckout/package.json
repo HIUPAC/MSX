@@ -1,0 +1,9 @@
+{
+  "name": "auto-checkout",
+  "version": "1.0.0",
+  "description": "自动签退与违规检测定时任务（文档 5.4.2 节）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

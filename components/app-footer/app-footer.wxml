@@ -1,0 +1,2 @@
+<!-- components/app-footer/app-footer.wxml -->
+<view class="app-footer"><text>图书馆座位预约</text></view>

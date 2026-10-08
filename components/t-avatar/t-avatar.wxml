@@ -1,0 +1,4 @@
+<view class="t-avatar t-avatar--{{size}}">
+  <image wx:if="{{image}}" class="t-avatar__image" src="{{image}}" mode="aspectFill"></image>
+  <view wx:else class="t-avatar__icon"><t-icon name="{{icon || 'user'}}" size="40rpx" color="#2F6B55" /></view>
+</view>

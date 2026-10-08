@@ -1,0 +1,102 @@
+<view class="page-wrapper home-page">
+  <!-- 匿名首页:不展示任何学生个人信息 -->
+  <view class="home-heading">
+    <view class="heading-copy">
+      <text class="page-kicker">校园图书馆</text>
+      <text class="greeting">{{greetingText}}</text>
+    </view>
+    <view class="privacy-badge">
+      <t-icon name="info-circle" size="12px" color="#657469" />
+      <text>匿名首页</text>
+    </view>
+  </view>
+
+  <view class="reserve-hero">
+    <view class="hero-copy">
+      <text class="hero-title">为今天留一个座位</text>
+      <text class="hero-description">选择楼层与时段，把时间留给专注。</text>
+    </view>
+    <view class="hero-meta">
+      <text>3 层学习空间 · {{totalSeats}} 个座位</text>
+      <text wx:if="{{statsReady}}">今日预约 {{todayReservations}} 次</text>
+    </view>
+    <button class="reserve-cta" hover-class="reserve-cta-active" bindtap="goReserve">
+      <text>开始选座</text>
+      <t-icon name="chevron-right" size="24px" color="#FFFFFF" />
+    </button>
+  </view>
+
+  <!-- 实时座位统计:总座位 / 剩余座位 / 使用率 -->
+  <view class="seat-stats">
+    <view class="stats-head">
+      <text class="section-name">实时座位</text>
+      <text class="stats-updated">{{statsError || (statsReady ? '更新于 ' + statsUpdatedText : '连接中…')}} · 每 15 秒刷新</text>
+    </view>
+    <view class="stats-board">
+      <view class="stats-main">
+        <text class="stats-main-label">剩余座位 · {{statsSlotLabel}}</text>
+        <text class="stats-main-value {{remainingPop ? 'stats-main-value--pop' : ''}}">{{statsReady ? remainingSeats : '—'}}</text>
+        <text class="stats-main-note">已占用 {{statsReady ? occupiedCount : '—'}} 座 · 共 3 层</text>
+      </view>
+      <view class="stats-side">
+        <view class="stats-cell">
+          <view class="stats-cell-value-row">
+            <text class="stats-cell-value">{{statsReady ? usageRate : '—'}}</text>
+            <text wx:if="{{statsReady}}" class="stats-cell-unit">%</text>
+          </view>
+          <text class="stats-cell-label">使用率</text>
+        </view>
+        <view class="stats-cell stats-cell--alt">
+          <text class="stats-cell-value">{{totalSeats}}</text>
+          <text class="stats-cell-label">总座位</text>
+        </view>
+      </view>
+    </view>
+    <view class="usage-track">
+      <view class="usage-fill usage-fill--{{usageLevel}}" style="width: {{statsReady ? usageRate : 0}}%;"></view>
+    </view>
+    <button wx:if="{{statsError}}" class="stats-retry" bindtap="loadStats">重新加载</button>
+  </view>
+
+  <view class="quick-actions">
+    <button class="quick-action" hover-class="action-active" data-key="checkin" bindtap="onQuickAction">
+      <view class="quick-copy">
+        <text class="quick-title">扫码签到</text>
+        <text class="quick-description">到馆后，扫描座位码</text>
+      </view>
+      <t-icon name="check" size="22px" color="#2F6B55" />
+    </button>
+    <button class="quick-action" hover-class="action-active" data-key="fav" bindtap="onQuickAction">
+      <view class="quick-copy">
+        <text class="quick-title">收藏座位</text>
+        <text class="quick-description">下次更快找到喜欢的位置</text>
+      </view>
+      <t-icon name="star" size="22px" color="#2F6B55" />
+    </button>
+  </view>
+
+  <view wx:if="{{noticeTitle}}" class="notice-row">
+    <t-icon name="sound" size="16px" color="#B17930" />
+    <text class="notice-copy">{{noticeTitle}}</text>
+  </view>
+
+  <view class="floor-section">
+    <view class="section-heading">
+      <text class="section-name">选择学习空间</text>
+      <text class="section-note">按你的学习方式</text>
+    </view>
+    <view class="floor-list">
+      <button wx:for="{{floors}}" wx:key="floor" class="floor-row" hover-class="action-active" data-floor="{{item.floor}}" bindtap="onFloorTap">
+        <view class="floor-number"><text>{{item.floor}}</text><text class="floor-letter">F</text></view>
+        <view class="floor-copy">
+          <text class="floor-title">{{item.areaName}}</text>
+          <text class="floor-description">{{item.description}} · {{item.totalSeats}} 座</text>
+        </view>
+        <t-icon name="chevron-right" size="20px" color="#7B857D" />
+      </button>
+    </view>
+  </view>
+
+  <!-- 点击弹出一句孤立的话 -->
+  <quote-pop />
+</view>

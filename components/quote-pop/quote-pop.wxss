@@ -1,0 +1,130 @@
+/* 右下角浮动语录触发器 + 弹出气泡（纸笺风格，琥珀色点缀，与全局扁平设计一致） */
+.quote-pop {
+  position: fixed;
+  right: 28rpx;
+  bottom: calc(48rpx + env(safe-area-inset-bottom));
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* ── 首次引导提示 ── */
+.quote-hint {
+  position: relative;
+  margin-bottom: 16rpx;
+  padding: 14rpx 22rpx;
+  background: #FFFFFF;
+  border: 1rpx solid #E3E8E1;
+  border-radius: 14rpx;
+  animation: hint-in 0.3s ease both;
+}
+.quote-hint-text {
+  font-size: 22rpx;
+  color: #657469;
+}
+.quote-hint-tail {
+  position: absolute;
+  right: 36rpx;
+  bottom: -8rpx;
+  width: 16rpx;
+  height: 16rpx;
+  background: #FFFFFF;
+  border-right: 1rpx solid #E3E8E1;
+  border-bottom: 1rpx solid #E3E8E1;
+  transform: rotate(45deg);
+}
+
+/* ── 弹出气泡 ── */
+.quote-bubble {
+  position: relative;
+  max-width: 520rpx;
+  margin-bottom: 18rpx;
+  padding: 24rpx 30rpx 30rpx;
+  background: #FFFFFF;
+  border: 1rpx solid #E3E8E1;
+  border-radius: 22rpx 22rpx 6rpx 22rpx;
+  /* 默认收起:透明 + 缩小,靠 transition 实现淡入淡出 */
+  opacity: 0;
+  transform: scale(0.55) translateY(16rpx);
+  transform-origin: 100% 100%;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.quote-bubble--show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+/* 每次点击重触发的弹性弹出动画 */
+.quote-bubble--pop {
+  animation: quote-bubble-pop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.quote-mark {
+  display: block;
+  font-size: 40rpx;
+  line-height: 1;
+  color: #B17930;
+  font-weight: 600;
+}
+.quote-text {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 27rpx;
+  line-height: 1.7;
+  color: #26332C;
+}
+.quote-bubble-tail {
+  position: absolute;
+  right: 36rpx;
+  bottom: -11rpx;
+  width: 22rpx;
+  height: 22rpx;
+  background: #FFFFFF;
+  border-right: 1rpx solid #E3E8E1;
+  border-bottom: 1rpx solid #E3E8E1;
+  transform: rotate(45deg);
+}
+
+/* ── 浮动触发器 ── */
+.quote-trigger {
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 50%;
+  background: #B17930;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 待点击的呼吸浮动 */
+  animation: quote-idle 2.6s ease-in-out infinite;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.quote-trigger--hover {
+  opacity: 0.9;
+}
+.quote-trigger--pressed {
+  animation: none;
+  transform: scale(0.88);
+}
+.quote-glyph {
+  color: #FFFFFF;
+  font-size: 46rpx;
+  font-weight: 600;
+  line-height: 1;
+  transform: translateY(-2rpx);
+}
+
+/* ── 动画帧 ── */
+@keyframes quote-bubble-pop {
+  0%   { transform: scale(0.55) translateY(16rpx); }
+  60%  { transform: scale(1.06) translateY(-4rpx); }
+  100% { transform: scale(1) translateY(0); }
+}
+@keyframes quote-idle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8rpx); }
+}
+@keyframes hint-in {
+  from { opacity: 0; transform: translateY(10rpx); }
+  to   { opacity: 1; transform: translateY(0); }
+}

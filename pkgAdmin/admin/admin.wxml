@@ -1,0 +1,159 @@
+<!-- pkgAdmin/admin/admin.wxml -->
+<navbar-back showBack="{{true}}" />
+<view class="page-wrapper">
+  <view class="admin-header card">
+    <view class="flex-align-center"><t-icon name="app" size="20px" color="#2F6B55" /><text class="text-lg font-semibold"> 管理后台</text></view>
+    <text class="text-sm text-secondary">座位管理 · 违规处理 · 申诉审核 · 数据统计</text>
+  </view>
+  <view wx:if="{{dataError}}" class="content-padding"><text class="text-sm text-danger">{{dataError}}</text></view>
+  <t-tabs value="{{activeTab}}" items="{{adminTabItems}}" bindchange="onTabChange" />
+
+  <!-- 座位管理 -->
+  <view wx:if="{{activeTab === 0}}" class="content-padding">
+    <view wx:for="{{seats}}" wx:key="_id" class="card">
+      <view class="flex-between">
+        <view>
+          <text class="text-base font-medium">{{item.areaName}} {{item.tableNo}}桌·{{item.seatNo}}号</text>
+          <view class="text-xs text-secondary">{{item.status !== 'disabled' && item.status !== 'maintenance' ? '启用' : '禁用'}}</view>
+        </view>
+        <t-switch value="{{item.status !== 'disabled' && item.status !== 'maintenance'}}" disabled="{{!!updatingSeat}}" data-id="{{item._id}}" bindchange="toggleSeat" />
+      </view>
+    </view>
+    <t-button theme="primary" size="large" block bindtap="goSeats" class="mt-md">高级座位管理</t-button>
+  </view>
+
+  <!-- 违规处理 -->
+  <view wx:if="{{activeTab === 1}}" class="content-padding">
+    <view class="filter-bar">
+      <view wx:for="{{violationFilters}}" wx:key="value"
+        class="filter-tag {{item.value === currentViolationFilter ? 'active' : ''}}"
+        data-value="{{item.value}}"
+        bindtap="onViolationFilterChange">
+        <t-tag size="small" theme="{{item.value === currentViolationFilter ? 'primary' : 'default'}}" variant="light">{{item.label}}</t-tag>
+      </view>
+    </view>
+    <view wx:for="{{filteredViolations}}" wx:key="_id" class="card">
+      <view class="flex-between">
+        <view>
+          <text class="text-base font-medium">{{item.userName || '匿名用户'}}</text>
+          <t-tag size="small" theme="danger" variant="light" class="ml-sm">{{item.typeLabel}}</t-tag>
+          <text class="text-sm text-danger ml-sm">扣 {{item.penaltyScore}} 分</text>
+        </view>
+        <t-button size="small" data-id="{{item._id}}" bindtap="handleViolation">处理</t-button>
+      </view>
+      <text class="text-xs text-secondary mt-xs">{{item.description || '无描述'}}</text>
+      <text class="text-xs text-placeholder" style="display:block;">{{item.date}}</text>
+    </view>
+    <view wx:if="{{filteredViolations.length === 0}}" class="empty-state">
+      <text class="text-sm text-secondary">暂无违规记录</text>
+    </view>
+  </view>
+
+  <!-- 申诉审核（新增） -->
+  <view wx:if="{{activeTab === 2}}" class="content-padding">
+    <view class="card flex-between">
+      <text class="text-base font-semibold">待处理申诉</text>
+      <t-button size="small" theme="default" variant="outline" bindtap="loadAppeals">刷新</t-button>
+    </view>
+    <view wx:for="{{appeals}}" wx:key="_id" class="card">
+      <view class="flex-between">
+        <view>
+          <text class="text-base font-medium">{{item.userName || '匿名用户'}}</text>
+          <t-tag size="small" theme="warning" variant="light" class="ml-sm">{{item.typeLabel || '申诉中'}}</t-tag>
+        </view>
+        <text class="text-xs text-placeholder">{{formatTime(item.appealTime)}}</text>
+      </view>
+      <view class="appeal-reason">
+        <text class="text-sm text-secondary">申诉理由：</text>
+        <text class="text-sm">{{item.appealReason || '（用户未填写）'}}</text>
+      </view>
+      <view class="flex-between mt-sm">
+        <t-button size="small" theme="success" data-id="{{item._id}}" data-approved="{{true}}" bindtap="onHandleAppeal">通过</t-button>
+        <t-button size="small" theme="danger" data-id="{{item._id}}" data-approved="{{false}}" bindtap="onHandleAppeal" class="ml-sm">驳回</t-button>
+        <t-button size="small" theme="default" variant="outline" data-id="{{item._id}}" data-reply="true" bindtap="onHandleAppeal" class="ml-sm">回复</t-button>
+      </view>
+    </view>
+    <view wx:if="{{appeals.length === 0}}" class="empty-state">
+      <text class="text-sm text-secondary">暂无待处理申诉</text>
+    </view>
+  </view>
+
+  <!-- 公告管理 -->
+  <view wx:if="{{activeTab === 3}}" class="content-padding">
+    <view wx:for="{{notices}}" wx:key="_id" class="card">
+      <view class="flex-between">
+        <view><text class="text-base font-medium">{{item.title}}</text></view>
+        <t-tag size="small" theme="primary" variant="light">{{item.type}}</t-tag>
+      </view>
+      <text class="text-sm text-secondary">{{item.content}}</text>
+    </view>
+    <t-button theme="primary" size="large" block bindtap="publishNotice" class="mt-md">发布公告</t-button>
+  </view>
+
+  <!-- 统计 -->
+  <view wx:if="{{activeTab === 4}}" class="content-padding">
+    <view class="card">
+      <view class="flex-between">
+        <text class="text-base font-semibold">数据统计</text>
+        <t-button size="small" theme="default" variant="outline" bindtap="onRefreshStats" loading="{{statsRefreshing}}" disabled="{{aggregating}}">刷新</t-button>
+      </view>
+      <view class="flex-between mt-sm">
+        <view class="flex-col flex-center">
+          <text class="text-lg font-bold">{{statsReady ? stats.usageRate + '%' : '—'}}</text>
+          <text class="text-xs text-secondary">座位利用率</text>
+        </view>
+        <view class="flex-col flex-center">
+          <text class="text-lg font-bold">{{statsReady ? stats.checkinRate + '%' : '—'}}</text>
+          <text class="text-xs text-secondary">签到率</text>
+        </view>
+        <view class="flex-col flex-center">
+          <text class="text-lg font-bold">{{statsReady ? stats.violationRate + '%' : '—'}}</text>
+          <text class="text-xs text-secondary">违规率</text>
+        </view>
+      </view>
+      <text wx:if="{{statsError}}" class="text-sm text-danger">{{statsError}}</text>
+      <t-button size="small" theme="primary" variant="outline" block bindtap="onTriggerAggregate" loading="{{aggregating}}" disabled="{{statsRefreshing}}" class="mt-sm">计算同步今日数据</t-button>
+    </view>
+
+    <view class="card mt-md" wx:if="{{latestStat}}">
+      <text class="text-base font-semibold">最新聚合数据 ({{latestStat.date}})</text>
+      <view class="flex-between mt-sm">
+        <view class="flex-col flex-center">
+          <text class="text-lg font-bold">{{latestStat.totalUsers || 0}}</text>
+          <text class="text-xs text-secondary">总用户</text>
+        </view>
+        <view class="flex-col flex-center">
+          <text class="text-lg font-bold">{{latestStat.totalSeats || 0}}</text>
+          <text class="text-xs text-secondary">总座位</text>
+        </view>
+        <view class="flex-col flex-center">
+          <text class="text-lg font-bold">{{latestStat.totalReservations || 0}}</text>
+          <text class="text-xs text-secondary">总预约</text>
+        </view>
+      </view>
+      <view class="flex-between mt-md">
+        <text class="text-sm text-secondary">当日预约：{{latestStat.dayReservations || 0}}</text>
+        <text class="text-sm text-secondary">当日签到：{{latestStat.dayCheckedIn || 0}}</text>
+        <text class="text-sm text-secondary">当日违规：{{latestStat.dayViolations || 0}}</text>
+      </view>
+    </view>
+
+    <t-button theme="primary" size="large" block bindtap="goStats" class="mt-md">查看详细统计</t-button>
+
+    <!-- 危险操作区 -->
+    <view class="card" style="margin-top: var(--space-lg); border: 1rpx solid var(--color-danger);">
+      <text class="text-base font-semibold text-danger">⚠ 危险操作</text>
+      <text class="text-xs text-secondary" style="display:block; margin: 8rpx 0 16rpx;">
+        清空数据库内全部用户资料（云端 + 本地），不可恢复！仅供开发测试使用。
+      </text>
+      <t-button
+        theme="danger"
+        size="large"
+        block
+        bindtap="onClearAllUsers"
+      >清空全部用户资料</t-button>
+    </view>
+  </view>
+
+  <app-footer />
+</view>

@@ -1,0 +1,9 @@
+{
+  "name": "daily-reset",
+  "version": "1.0.0",
+  "description": "每日23:00定时重置所有座位占用信息，统一恢复为可预约状态",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

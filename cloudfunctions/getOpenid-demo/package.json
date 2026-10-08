@@ -1,0 +1,9 @@
+{
+  "name": "getOpenid-demo",
+  "version": "1.0.0",
+  "description": "获取当前调用者 openid,用于前端判断'我已预约'",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

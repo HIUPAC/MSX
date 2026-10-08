@@ -1,0 +1,5 @@
+<!-- 占位图标：首页 - 请在微信开发者工具中替换为实际图标 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="81" height="81" viewBox="0 0 81 81">
+  <rect width="81" height="81" fill="#0052D9" rx="12"/>
+  <text x="50%" y="55%" text-anchor="middle" fill="white" font-size="40">🏠</text>
+</svg>

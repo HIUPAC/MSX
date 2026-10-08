@@ -1,0 +1,9 @@
+{
+  "name": "cancelSeat-demo",
+  "version": "1.0.0",
+  "description": "取消预约示例(文章复刻版): 仅本人可释放",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

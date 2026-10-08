@@ -1,0 +1,9 @@
+{
+  "name": "acquireSeatLock",
+  "version": "1.0.0",
+  "description": "原子化获取座位预选锁",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

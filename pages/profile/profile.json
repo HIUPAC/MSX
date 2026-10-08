@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "t-avatar": "/components/t-avatar/t-avatar",
+    "t-progress": "/components/t-progress/t-progress",
+    "t-button": "/components/t-button/t-button",
+    "t-input": "/components/t-input/t-input",
+    "t-icon": "/components/t-icon/t-icon",
+    "t-loading": "/components/t-loading/t-loading",
+    "app-footer": "/components/app-footer/app-footer"
+  },
+  "navigationBarTitleText": "我的"
+}

@@ -1,0 +1,15 @@
+{
+  "usingComponents": {
+    "t-tabs": "/components/t-tabs/t-tabs",
+    "t-cell": "/components/t-cell/t-cell",
+    "t-cell-group": "/components/t-cell-group/t-cell-group",
+    "t-tag": "/components/t-tag/t-tag",
+    "t-button": "/components/t-button/t-button",
+    "t-switch": "/components/t-switch/t-switch",
+    "t-dialog": "/components/t-dialog/t-dialog",
+    "t-icon": "/components/t-icon/t-icon",
+    "app-footer": "/components/app-footer/app-footer",
+    "navbar-back": "/components/navbar-back/navbar-back"
+  },
+  "navigationBarTitleText": "管理后台"
+}

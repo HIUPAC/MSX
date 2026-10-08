@@ -1,0 +1,168 @@
+<view class="page-wrapper profile-page">
+  <view class="profile-heading">
+    <text class="profile-title">我的</text>
+    <text class="profile-subtitle">账户与使用记录</text>
+  </view>
+
+  <view class="account-card">
+    <view class="account-header">
+      <button wx:if="{{userInfo}}" class="avatar-pick-btn" bindtap="onAvatarTap" disabled="{{avatarUploading}}">
+        <image wx:if="{{userInfo.avatarUrl}}" class="user-avatar-img" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+        <t-avatar wx:else size="medium" icon="user" />
+        <view wx:if="{{avatarUploading}}" class="avatar-uploading-mask"><t-loading theme="circular" size="32rpx" /></view>
+      </button>
+      <view wx:else class="guest-avatar"><t-icon name="user" size="28px" color="#2F6B55" /></view>
+      <view class="account-copy">
+        <text class="account-name">{{userInfo ? userInfo.name : '欢迎来学习'}}</text>
+        <text wx:if="{{userInfo && userInfo.studentId}}" class="account-meta">学号 {{userInfo.studentId}}</text>
+        <text wx:else class="account-meta">{{userInfo ? '管理你的学习安排' : '登录后查看预约、收藏与信用记录'}}</text>
+      </view>
+    </view>
+    <button wx:if="{{userInfo}}" class="college-edit" hover-class="row-active" bindtap="onEditCollege">
+      <text class="college-label">学院</text>
+      <text class="college-name">{{userInfo.college || '设置学院信息'}}</text>
+      <t-icon name="edit" size="16px" color="#7B857D" />
+    </button>
+    <view wx:if="{{!userInfo || !userInfo._id}}" class="login-entry"><t-button theme="primary" size="medium" block bindtap="showLogin">登录 / 注册</t-button></view>
+  </view>
+
+  <view wx:if="{{userInfo}}" class="activity-card">
+    <view class="credit-heading">
+      <view class="credit-copy"><text class="block-title">信用积分</text><text class="credit-note">{{isBanned ? '预约暂不可用' : '保持守约，安心学习'}}</text></view>
+      <view class="credit-number {{creditScore < 80 ? 'credit-warning' : ''}}"><text>{{creditScore}}</text><text class="credit-limit"> / 100</text></view>
+    </view>
+    <t-progress percentage="{{creditScore}}" color="{{creditScore >= 80 ? '#2F6B55' : '#B17930'}}" strokeWidth="8rpx" />
+    <view wx:if="{{isBanned}}" class="credit-ban">预约暂停剩余 {{banRemainDays}} 天</view>
+    <text class="credit-rule">完成 +1 · 未到 -5 · 低于 80 分暂停预约 7 天</text>
+    <view class="profile-stats">
+      <view class="profile-stat"><text class="stat-number">{{stats.totalReservations}}</text><text class="stat-label">累计预约</text></view>
+      <view class="profile-stat"><text class="stat-number">{{stats.completedCount}}</text><text class="stat-label">已完成</text></view>
+      <view class="profile-stat"><text class="stat-number {{stats.violationCount > 0 ? 'credit-warning' : ''}}">{{stats.violationCount}}</text><text class="stat-label">违规记录</text></view>
+    </view>
+  </view>
+
+  <view class="profile-menu">
+    <button wx:for="{{menus}}" wx:key="label" class="menu-row" hover-class="row-active" data-path="{{item.path}}" data-type="{{item.type}}" data-tab="{{item.tab}}" bindtap="onMenuTap">
+      <view class="menu-icon"><t-icon name="{{item.icon}}" size="20px" color="#2F6B55" /></view>
+      <view class="menu-copy"><text class="menu-title">{{item.label}}</text><text class="menu-note">{{item.note}}</text></view>
+      <t-icon name="chevron-right" size="18px" color="#7B857D" />
+    </button>
+  </view>
+
+  <view class="secondary-menu">
+    <button class="secondary-row" hover-class="row-active" data-path="/pkgTools/tools/tools" bindtap="onMenuTap"><text>更多工具</text><t-icon name="chevron-right" size="18px" color="#7B857D" /></button>
+    <button wx:if="{{isAdmin}}" class="secondary-row" hover-class="row-active" bindtap="goAdmin"><text>管理后台</text><t-icon name="chevron-right" size="18px" color="#7B857D" /></button>
+  </view>
+
+  <button wx:if="{{userInfo && userInfo._id}}" class="logout-button" hover-class="row-active" bindtap="handleLogout">退出登录</button>
+  <app-footer />
+  <!-- 手机号登录 / 注册弹窗 -->
+  <view wx:if="{{showLoginForm}}" class="college-overlay" bindtap="closeLoginForm">
+    <view class="college-popup" catchtap="noop">
+      <view class="flex-between mb-md">
+        <text class="text-lg font-semibold">{{isRegisterMode ? '注册' : '登录'}}</text>
+        <t-icon name="close" size="20px" bindtap="closeLoginForm" />
+      </view>
+
+      <!-- 模式切换标签 -->
+      <view class="flex-center mb-md" style="gap:0;">
+        <view class="mode-tab {{isRegisterMode ? 'mode-active' : ''}}" bindtap="toggleLoginMode">
+          <text>注册</text>
+        </view>
+        <view class="mode-tab {{!isRegisterMode ? 'mode-active' : ''}}" bindtap="toggleLoginMode">
+          <text>登录</text>
+        </view>
+      </view>
+
+      <!-- 手机号 -->
+      <view class="mb-md">
+        <text class="text-sm text-secondary mb-sm" style="display:block;">手机号</text>
+        <input
+          class="login-input"
+          type="number"
+          placeholder="请输入手机号"
+          value="{{loginPhone}}"
+          bindinput="onLoginPhoneInput"
+          maxlength="11"
+          adjust-position="{{true}}"
+          cursor-spacing="20"
+        />
+      </view>
+
+      <!-- 姓名 -->
+      <view class="mb-md">
+        <text class="text-sm text-secondary mb-sm" style="display:block;">姓名</text>
+        <input
+          class="login-input"
+          placeholder="请输入您的姓名"
+          value="{{loginName}}"
+          bindinput="onLoginNameInput"
+          maxlength="10"
+          adjust-position="{{true}}"
+          cursor-spacing="20"
+        />
+      </view>
+
+      <!-- 学号（仅注册模式） -->
+      <view wx:if="{{isRegisterMode}}" class="mb-md">
+        <text class="text-sm text-secondary mb-sm" style="display:block;">学号</text>
+        <input
+          class="login-input"
+          type="text"
+          placeholder="请输入您的学号"
+          value="{{loginStudentId}}"
+          bindinput="onLoginStudentIdInput"
+          maxlength="15"
+          adjust-position="{{true}}"
+          cursor-spacing="20"
+        />
+      </view>
+
+      <view class="text-xs text-placeholder mb-md flex-center">
+        {{isRegisterMode ? '首次使用请注册，已有账号请切换"登录"' : '已注册用户直接登录'}}
+      </view>
+
+      <t-button theme="primary" size="large" block bindtap="submitLogin">
+        {{isRegisterMode ? '注册' : '登录'}}
+      </t-button>
+    </view>
+  </view>
+
+  <!-- 学院选择弹窗 -->
+  <view wx:if="{{showCollegePicker}}" class="college-overlay" bindtap="closeCollegePicker">
+    <view class="college-popup" catchtap="noop">
+      <view class="flex-between mb-md">
+        <text class="text-lg font-semibold">编辑学院信息</text>
+        <t-icon name="close" size="20px" bindtap="closeCollegePicker" />
+      </view>
+
+      <picker mode="selector" range="{{collegeList}}" value="{{collegeIndex}}" bindchange="onCollegePickerChange">
+        <view class="college-picker-item flex-between">
+          <text class="{{editCollege ? 'text-base' : 'text-placeholder'}}">
+            {{editCollege || '点击选择学院'}}
+          </text>
+          <t-icon name="chevron-down" size="18px" color="#8F959E" />
+        </view>
+      </picker>
+
+      <view class="flex-between mt-md">
+        <text class="text-xs text-placeholder">
+          {{useCustomCollege ? '从列表选择' : '列表中没有？'}}
+        </text>
+        <t-button size="extra-small" theme="default" variant="text" bindtap="toggleCustomInput">
+          {{useCustomCollege ? '返回列表' : '手动输入'}}
+        </t-button>
+      </view>
+
+      <view wx:if="{{useCustomCollege}}" class="mt-sm">
+        <t-input placeholder="请输入学院全称" value="{{customCollege}}" clearable maxlength="20" bindchange="onCustomCollegeInput" />
+      </view>
+
+      <view class="mt-lg">
+        <t-button theme="primary" size="large" block loading="{{collegeSaving}}" bindtap="saveCollege">
+          保存学院信息
+        </t-button>
+      </view>
+    </view>
+  </view>
+</view>
